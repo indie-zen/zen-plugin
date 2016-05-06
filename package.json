@@ -1,0 +1,26 @@
+{
+  "name": "zen-plugin",
+  "version": "2.0.0",
+  "description": "Zen Plugin library ",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/indie-zen/zen-plugin.git"
+  },
+  "author": "Raymond A. Richards",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/indie-zen/zen-plugin/issues"
+  },
+  "homepage": "https://github.com/indie-zen/zen-plugin#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
