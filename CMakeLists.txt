@@ -1,10 +1,7 @@
 cmake_minimum_required (VERSION 3.5)
 
-set(CMAKE_C_COMPILER clang)
-set(CMAKE_CXX_COMPILER clang++)
-
 # Using experimental C++ features, including c++14 and c++17.
-set(CMAKE_CXX_FLAGS "-std=c++1z -Wc++11-extensions")
+set(CMAKE_CXX_FLAGS "-std=c++1z")
 
 project(zenplugin)
 
@@ -16,22 +13,9 @@ project(zenplugin)
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 
+find_package(Boost REQUIRED unit_test_framework)
+
 include_directories("${PROJECT_SOURCE_DIR}/include")
-
-set(CLDOC "" CACHE STRING "User specified '/path/to/cldoc'")
-if(CLDOC STREQUAL "")
-	find_program(CLDOC cldoc)
-elseif(NOT EXISTS ${CLDOC})
-	message(FATAL_ERROR "CLDOC was set to '${CLDOC}' but does not exist")
-endif()
-
-if(NOT DOCS_OUTPUT_DIR)
-	set(DOCS_OUTPUT_DIR "gendocs" CACHE STRING "Generated documentation output directory" FORCE)
-endif()
-
-if(NOT DOCS_DIR)
-	set(DOCS_DIR "" CACHE STRING "Location of external documentation files to be merged in" FORCE)
-endif()
 
 set(SOURCES
   lib/I_Configuration.cpp
@@ -48,35 +32,23 @@ set(HEADERS
 )
 
 add_definitions(-DZEN_PLUGIN_EXPORTS)
+add_definitions(-DBOOST_TEST_DYN_LINK) 
 
-add_library(zen_plugin ${SOURCES})
+add_library(zen-plugin ${SOURCES})
 
-if(NOT ${CLDOC} STREQUAL "CLDOC-NOTFOUND")
-  if(NOT ${DOCS_DIR} STREQUAL "")
-  	set(CLDOC_MERGE "--merge ${DOCS_DIR}")
-  else()
-  	set(CLDOC_MERGE "")
-  endif()
+enable_testing()
 
-  add_custom_target(docs COMMAND
-    ${CLDOC} generate
-    "-std=c++11"
-    -I${PROJECT_SOURCE_DIR}/include
-    --
-    ${CLDOC_MERGE}
-    --output ../${DOCS_OUTPUT_DIR}
-    ${HEADERS}
-    ${SOURCES}
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-  )
+set(TEST_SOURCES
+  test/simple.cpp
+)
 
-  set_target_properties(docs PROPERTIES
-    EXCLUDE_FROM_ALL false
-    EXCLUDE_FROM_DEFAULT_BUILD false
-  )
+add_executable(zen-plugin-tests ${TEST_SOURCES})
 
-else()
-  message(STATUS
-    "Documentation will not be generated"
-  )
-endif()
+target_link_libraries(zen-plugin-tests zen-plugin
+    ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+)
+
+add_test(tests zen-plugin-tests)
+
+install(TARGETS zen-plugin DESTINATION /usr/local/bin)
+install(DIRECTORY include DESTINATION /usr/local)

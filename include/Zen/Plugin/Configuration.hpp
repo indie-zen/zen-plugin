@@ -2,8 +2,8 @@
 // Indie Zen
 // Copyright Raymond A. Richards 2001 - 2016
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#ifndef ZEN_PLUGIN_CONFIGURAGION_HPP_INCLUDED
-#define ZEN_PLUGIN_CONFIGURAGION_HPP_INCLUDED
+#ifndef ZEN_PLUGIN_CONFIGURATION_HPP_INCLUDED
+#define ZEN_PLUGIN_CONFIGURATION_HPP_INCLUDED
 
 #ifdef  _MSC_VER
 #    pragma once
@@ -77,4 +77,4 @@
 #    define PLUGIN_DLL_LINK
 #endif  // ! PLUGIN_DLL_LINK
 
-#endif  // ZEN_PLUGIN_CONFIGURAGION_HPP_INCLUDED
+#endif  // ZEN_PLUGIN_CONFIGURATION_HPP_INCLUDED
