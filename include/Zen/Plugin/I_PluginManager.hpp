@@ -1,3 +1,8 @@
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+// Zen Plugin Framework
+//
+// Copyright (C) 2001 - 2016 Raymond A. Richards
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #ifndef ZEN_PLUGIN_I_PLUGIN_MANAGER_HPP_INCLUDED
 #define ZEN_PLUGIN_I_PLUGIN_MANAGER_HPP_INCLUDED
 
@@ -115,7 +120,7 @@ protected:
 };	// interface I_PluginManager
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace Plugins
+}   // namespace Plugin
 }   // namespace Zen
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
