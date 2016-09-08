@@ -16,7 +16,7 @@ namespace Plugin {
 class PLUGIN_DLL_LINK I_Plugin
 {
 protected:
-             I_Plugin();
+             I_Plugin() = default;
              I_Plugin(const I_Plugin&) = delete;
     virtual ~I_Plugin() = default;
 };

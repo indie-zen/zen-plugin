@@ -33,7 +33,8 @@ public:
     /// static, downloadable, remote, etc.
     enum MODULE_SERVICE_TYPE
     {
-        DYNAMIC
+        DYNAMIC,
+        STATIC
     };
     /// @}
 
@@ -62,8 +63,8 @@ public:
     /// @name 'Structors
     /// @{
 protected:
-             I_ModuleManager();
-    virtual ~I_ModuleManager();
+             I_ModuleManager() = default;
+    virtual ~I_ModuleManager() = default;
     /// @}
 
 };  // interface I_ModuleManager

@@ -24,10 +24,11 @@
 #include "ModuleManager.hpp"
 #include "ModuleService.hpp"
 
-#include <Zen/PluginI_PluginManager.hpp>
-#include <Zen/PluginI_Application.hpp>
+#include <Zen/Plugin/I_PluginManager.hpp>
+#include <Zen/Plugin/I_Application.hpp>
 
-#include <Zen/Core/Utility/log_stream.hpp>
+// TODO Implement log_stream
+// #include <Zen/Core/Utility/log_stream.hpp>
 
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
@@ -74,10 +75,11 @@ ModuleManager::addPath(const boost::filesystem::path& _modulePath)
 void
 ModuleManager::dropPath(const boost::filesystem::path& _modulePath)
 {
-    // Get the logger stream
-    Zen::Utility::log_stream& logStream(
-        I_PluginManager::getSingleton().getApplication()->getLogStream()
-    );
+    // TODO Implement logging
+    // // Get the logger stream
+    // Zen::Utility::log_stream& logStream(
+    //     I_PluginManager::getSingleton().getApplication()->getLogStream()
+    // );
 
     module_paths_iterator_type iter;
 
@@ -92,7 +94,7 @@ ModuleManager::dropPath(const boost::filesystem::path& _modulePath)
         m_modulePaths.erase(iter);
     else
     {
-        logStream << "DEBUG: Path " << _modulePath << " is not in the list of module search paths." << std::endl;
+        // logStream << "DEBUG: Path " << _modulePath << " is not in the list of module search paths." << std::endl;
 
         // TODO Throw an exception with the error.
     }
@@ -102,10 +104,11 @@ ModuleManager::dropPath(const boost::filesystem::path& _modulePath)
 bool
 ModuleManager::findPath(const std::string _moduleName, boost::filesystem::path &_modulePath)
 {
-    // Get the logger stream
-    Zen::Utility::log_stream& logStream(
-        I_PluginManager::getSingleton().getApplication()->getLogStream()
-    );
+    // TODO Implement log_stream
+    // // Get the logger stream
+    // Zen::Utility::log_stream& logStream(
+    //     I_PluginManager::getSingleton().getApplication()->getLogStream()
+    // );
 
     bool modulePathFound = false;
     boost::filesystem::path modulePath;
@@ -129,18 +132,16 @@ ModuleManager::findPath(const std::string _moduleName, boost::filesystem::path &
     moduleName << "lib" << _moduleName << ".so";
 #endif
 
-
     iter = m_modulePaths.begin();
     do
     {
-
         // Create the fully qualified path
         modulePath = *iter / boost::filesystem::path(moduleName.str());
 
         // Check if the path is valid
         modulePathFound = boost::filesystem::exists(modulePath);
 
-        logStream << "DEBUG: attempting " << modulePath.string() << std::endl;
+        // logStream << "DEBUG: attempting " << modulePath.string() << std::endl;
 
         // Iterate path iterator
         iter++;

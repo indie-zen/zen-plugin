@@ -3,34 +3,13 @@
 //
 // Copyright (C) 2001 - 2016 Raymond A. Richards
 // Copyright (C) 2008 - 2009 Matthew Alan Gray
-//
-//  This software is provided 'as-is', without any express or implied
-//  warranty.  In no event will the authors be held liable for any damages
-//  arising from the use of this software.
-//
-//  Permission is granted to anyone to use this software for any purpose,
-//  including commercial applications, and to alter it and redistribute it
-//  freely, subject to the following restrictions:
-//
-//  1. The origin of this software must not be misrepresented; you must not
-//     claim that you wrote the original software. If you use this software
-//     in a product, an acknowledgment in the product documentation would be
-//     appreciated but is not required.
-//  2. Altered source versions must be plainly marked as such, and must not be
-//     misrepresented as being the original software.
-//  3. This notice may not be removed or altered from any source distribution.
-//
-//  Tony Richards trichards@indiezen.com
-//  Matthew Alan Gray mgray@indiezen.org
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #ifndef ZEN_PLUGIN_STARTUP_SHUTDOWN_MANAGER_HPP_INCLUDED
 #define ZEN_PLUGIN_STARTUP_SHUTDOWN_MANAGER_HPP_INCLUDED
 
-#include "../I_StartupShutdownManager.hpp"
+#include <Zen/Plugin/I_StartupShutdownManager.hpp>
 
-#include <Zen/Core/Threading/ThreadPool.hpp>
-
-#include <Zen/PluginI_Configuration.hpp>
+#include <Zen/Plugin/I_Configuration.hpp>
 
 #include <set>
 
@@ -64,7 +43,7 @@ public:
     /// @name I_StartupShutdownManager implementation
     /// @{
 public:
-    virtual Zen::Threading::I_Condition* start();
+    virtual std::future<void> start();
     virtual void stop();
     virtual void installParticipant(pParticipant_type _pParticipant);
     /// @}
@@ -84,7 +63,7 @@ public:
     /// This is called during the startup process for installed participants.
     ///
     /// @note Internal use only
-    Threading::ThreadPool& getSharedThreadPool() { return m_sharedThreadPool; }
+    // Threading::ThreadPool& getSharedThreadPool() { return m_sharedThreadPool; }
     /// @}
 
     /// @name Events
@@ -105,20 +84,20 @@ private:
     ManagerStates   m_currentState;
 
     /// ThreadPool that's shared among all of the participants.
-    Threading::ThreadPool   m_sharedThreadPool;
+    // Threading::ThreadPool   m_sharedThreadPool;
 
     /// Queue of items that require installation
     /// plus the thread that is used to perform
     /// the installation.
-    Threading::ThreadPool   m_installQueue;
+    // Threading::ThreadPool   m_installQueue;
 
     /// Queue of items that require graceful shutdown
     /// plus the thread that is use to perform
     /// the shutdown.
-    Threading::ThreadPool   m_shutdownQueue;
+    // Threading::ThreadPool   m_shutdownQueue;
 
     /// Guard for m_participants consistency
-    Threading::I_Mutex*     m_pParticipantGuard;
+    std::mutex     m_participantGuard;
 
     /// Collection of installed participants
     Participants_type       m_participants;

@@ -2,36 +2,18 @@
 // Zen Plugin Framework
 //
 // Copyright (C) 2001 - 2016 Raymond A. Richards
-//
-//  This software is provided 'as-is', without any express or implied
-//  warranty.  In no event will the authors be held liable for any damages
-//  arising from the use of this software.
-//
-//  Permission is granted to anyone to use this software for any purpose,
-//  including commercial applications, and to alter it and redistribute it
-//  freely, subject to the following restrictions:
-//
-//  1. The origin of this software must not be misrepresented; you must not
-//     claim that you wrote the original software. If you use this software
-//     in a product, an acknowledgment in the product documentation would be
-//     appreciated but is not required.
-//  2. Altered source versions must be plainly marked as such, and must not be
-//     misrepresented as being the original software.
-//  3. This notice may not be removed or altered from any source distribution.
-//
-//  Tony Richards trichards@indiezen.com
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #ifndef ZEN_PLUGIN_MODULE_SERVICE_HPP_INCLUDED
 #define ZEN_PLUGIN_MODULE_SERVICE_HPP_INCLUDED
 
-#include <Zen/PluginI_ModuleInfo.hpp>
-#include <Zen/PluginI_ModuleService.hpp>
-#include <Zen/Core/Threading/I_Mutex.hpp>
+#include <Zen/Plugin/I_ModuleInfo.hpp>
+#include <Zen/Plugin/I_ModuleService.hpp>
 
 #include <boost/shared_ptr.hpp>
 #include <boost/filesystem/path.hpp>
 
 #include <map>
+#include <mutex>
 #include <string>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
@@ -50,7 +32,6 @@ public:
     typedef boost::shared_ptr<I_ModuleInfo>                             module_info_ptr_type;
     typedef std::map<module_ptr_type, module_info_ptr_type>             modules_type;
     typedef std::map<module_ptr_type, module_info_ptr_type>::iterator   modules_iterator_type;
-    typedef Threading::I_Mutex*                                         mutex_ptr_type;
     /// @}
 
     /// @name I_ModuleService implementation
@@ -58,6 +39,7 @@ public:
 public:
     virtual module_ptr_type load(const std::string& _moduleName);
     virtual void unload(module_ptr_type _pModule);
+    virtual void install(const std::string& _moduleName, I_Module& _module);
     /// @}
 
     /// @name 'Structors
@@ -72,7 +54,7 @@ public:
 private:
     module_name_index_type      m_moduleIndex;
     modules_type                m_modules;
-    mutex_ptr_type              m_pModuleGuard;
+    std::mutex                  m_moduleGuard;
     /// @}
 
 };  // interface ModuleService

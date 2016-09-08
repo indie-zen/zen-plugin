@@ -2,40 +2,19 @@
 // Zen Plugin Framework
 //
 // Copyright (C) 2001 - 2016 Raymond A. Richards
-//
-//  This software is provided 'as-is', without any express or implied
-//  warranty.  In no event will the authors be held liable for any damages
-//  arising from the use of this software.
-//
-//  Permission is granted to anyone to use this software for any purpose,
-//  including commercial applications, and to alter it and redistribute it
-//  freely, subject to the following restrictions:
-//
-//  1. The origin of this software must not be misrepresented; you must not
-//     claim that you wrote the original software. If you use this software
-//     in a product, an acknowledgment in the product documentation would be
-//     appreciated but is not required.
-//  2. Altered source versions must be plainly marked as such, and must not be
-//     misrepresented as being the original software.
-//  3. This notice may not be removed or altered from any source distribution.
-//
-//  Tony Richards trichards@indiezen.com
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 #include "ModuleService.hpp"
 #include "ModuleInfo.hpp"
 
-#include <Zen/PluginI_Module.hpp>
-#include <Zen/PluginI_ModuleInfo.hpp>
-#include <Zen/PluginI_ModuleManager.hpp>
-#include <Zen/Core/Threading/MutexFactory.hpp>
-#include <Zen/Core/Threading/CriticalSection.hpp>
-#include <Zen/PluginI_PluginManager.hpp>
-#include <Zen/PluginI_Application.hpp>
+#include <Zen/Plugin/I_Module.hpp>
+#include <Zen/Plugin/I_ModuleInfo.hpp>
+#include <Zen/Plugin/I_ModuleManager.hpp>
+#include <Zen/Plugin/I_PluginManager.hpp>
+#include <Zen/Plugin/I_Application.hpp>
 
-#include <Zen/Core/Utility/GetLastError.hpp>
-#include <Zen/Core/Utility/log_stream.hpp>
-
+// #include <Zen/Core/Utility/GetLastError.hpp>
+// #include <Zen/Core/Utility/log_stream.hpp>
 
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
@@ -52,15 +31,11 @@ namespace Plugin {
 
 ModuleService::ModuleService()
 {
-    // Acquire a mutex
-    m_pModuleGuard = Threading::MutexFactory::create();
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 ModuleService::~ModuleService()
 {
-    // Release a mutex
-    Threading::MutexFactory::destroy(m_pModuleGuard);
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
@@ -68,21 +43,22 @@ I_ModuleService::module_ptr_type
 ModuleService::load(const std::string& _moduleName)
 {
     // Get the logger stream
-    Zen::Utility::log_stream& logStream(
-        I_PluginManager::getSingleton().getApplication()->getLogStream()
-    );
+    // TODO Implement logging
+    // Zen::Utility::log_stream& logStream(
+    //     I_PluginManager::getSingleton().getApplication()->getLogStream()
+    // );
 
     // Guard this method
-    boost::shared_ptr<Threading::CriticalSection> pGuard(
-        new Threading::CriticalSection(m_pModuleGuard) );
+    std::lock_guard<std::mutex> guard(m_moduleGuard);
 
+    // See if the module has already been loaded
     module_name_index_type::iterator iter = m_moduleIndex.find(_moduleName);
     if(iter != m_moduleIndex.end())
     {
         // Increment the reference count
         m_modules[iter->second]->incrementReferences();
 
-        // Return the
+        // Return the module
         return iter->second;
     }
 
@@ -93,7 +69,7 @@ ModuleService::load(const std::string& _moduleName)
     boost::filesystem::path modulePath;
     if(!pModuleManager->findPath(_moduleName, modulePath))
     {
-        logStream << "DEBUG: Module " << _moduleName << " not found in defined module search paths." << std::endl;
+        // logStream << "DEBUG: Module " << _moduleName << " not found in defined module search paths." << std::endl;
 
         // TODO: Throw an exception with the error
         return NULL;
@@ -104,28 +80,30 @@ ModuleService::load(const std::string& _moduleName)
 #ifdef _WIN32
     I_ModuleInfo::module_handle_type hModule = LoadLibraryA(modulePath.string().c_str());
 #else
-    logStream << "DEBUG: dlopen " << modulePath.string().c_str() << std::endl;
+    // logStream << "DEBUG: dlopen " << modulePath.string().c_str() << std::endl;
     I_ModuleInfo::module_handle_type hModule = dlopen(modulePath.string().c_str(), RTLD_NOW | RTLD_GLOBAL);
 #endif // _WIN32
 
     if (hModule == NULL)
     {
-        int err = Zen::Utility::GetLastError();
+        // TODO Implement
+        // int err = Zen::Utility::GetLastError();
+        int err = 0;
 
-        logStream << "DEBUG: Error loading module " << modulePath.string()
-#ifndef _WIN32
-        << dlerror()
-#else
-            << (err == 14001 ? "probably the module has dependencies not on the path.  Use depends.exe to figure it out." : "")
-#endif
-            << std::endl;
+        // logStream << "DEBUG: Error loading module " << modulePath.string()
+// #ifndef _WIN32
+//         << dlerror()
+// #else
+//             << (err == 14001 ? "probably the module has dependencies not on the path.  Use depends.exe to figure it out." : "")
+// #endif
+//             << std::endl;
 
 
         // TODO: Throw an exception with the error
         return NULL;
 #if 0
         std::stringstream errorStream;
-        errorStream << "Unable to find plugin module: " << moduleName.str();
+        // errorStream << "Unable to find plugin module: " << moduleName.str();
         pPluginInfo->setError(errorStream.str());
 #endif
     }
@@ -166,7 +144,7 @@ ModuleService::load(const std::string& _moduleName)
     }
     else
     {
-        logStream << "DEBUG: Error getting procedure address in module " << modulePath.string() << " Error " << Zen::Utility::GetLastError() << std::endl;
+        // logStream << "DEBUG: Error getting procedure address in module " << modulePath.string() << " Error " << Zen::Utility::GetLastError() << std::endl;
 
         // Not found, so return NULL
         return NULL;
@@ -177,14 +155,14 @@ ModuleService::load(const std::string& _moduleName)
 void
 ModuleService::unload(module_ptr_type _pModule)
 {
+    // TODO Implement logging
     // Get the logger stream
-    Zen::Utility::log_stream& logStream(
-        I_PluginManager::getSingleton().getApplication()->getLogStream()
-    );
+    // Zen::Utility::log_stream& logStream(
+    //     I_PluginManager::getSingleton().getApplication()->getLogStream()
+    // );
 
     // Guard this method
-    boost::shared_ptr<Threading::CriticalSection> pGuard(
-        new Threading::CriticalSection(m_pModuleGuard) );
+    std::lock_guard<std::mutex> guard(m_moduleGuard);
 
     // Use _pModule to get the module info
     module_info_ptr_type pModuleInfo = m_modules[_pModule];
@@ -208,7 +186,7 @@ ModuleService::unload(module_ptr_type _pModule)
         if( dlclose(hModule) )
 #endif // _WIN32
         {
-            logStream << "DEBUG: Error unloading module " << moduleName << " Error " << Zen::Utility::GetLastError() << std::endl;
+            // logStream << "DEBUG: Error unloading module " << moduleName << " Error " << Zen::Utility::GetLastError() << std::endl;
 
             // TODO Throw an exception with the error
             return;
@@ -219,6 +197,44 @@ ModuleService::unload(module_ptr_type _pModule)
         m_modules.erase(moduleIterator);
 
     }
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+void
+ModuleService::install(const std::string& _moduleName, I_Module& _module)
+{
+    // Guard this method
+    std::lock_guard<std::mutex> guard(m_moduleGuard);
+
+    // See if the module has already been loaded
+    module_name_index_type::iterator iter = m_moduleIndex.find(_moduleName);
+    if(iter != m_moduleIndex.end())
+    {
+        // Increment the reference count
+        m_modules[iter->second]->incrementReferences();
+        
+        return;
+    }
+
+    module_info_ptr_type pModuleInfo(new ModuleInfo);
+
+    I_ModuleManager* pModuleManager = &I_ModuleManager::getSingleton();
+
+    pModuleInfo->setName(_moduleName);
+
+    I_ModuleInfo::module_handle_type hModule = NULL;
+
+    pModuleInfo->setHandle(hModule);
+
+    // Set the reference count to 1
+    pModuleInfo->incrementReferences();
+
+    // Put it in the index
+    m_moduleIndex[_moduleName] = &_module;
+
+    // Put it in the cache
+    m_modules[&_module] = pModuleInfo;
+
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

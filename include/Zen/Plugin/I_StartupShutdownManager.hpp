@@ -14,9 +14,9 @@
 
 #include <Zen/Plugin/I_Configuration.hpp>
 
-#include <Zen/Core/Threading/I_Condition.hpp>
 
 #include <boost/noncopyable.hpp>
+#include <future>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace Zen {
@@ -32,14 +32,14 @@ class PLUGIN_DLL_LINK I_StartupShutdownManager
     /// @{
 public:
     typedef std::shared_ptr<I_StartupShutdownParticipant>   pParticipant_type;
-    typedef Zen::Event::Event<const std::string&>           instanceEvent_type;
+    // typedef Zen::Event::Event<const std::string&>           instanceEvent_type;
     /// @}
 
     /// @name I_StartupShutdownManager interface
     /// @{
 public:
     /// Start the installed participants.
-    virtual Zen::Threading::I_Condition* start() = 0;
+    virtual std::future<void> start() = 0;
 
     /// @brief Stop the installed participants
     ///
@@ -72,8 +72,9 @@ public:
     /// @name Events
     /// @{
 public:
-    instanceEvent_type      onStart;
-    instanceEvent_type      onStop;
+    // TODO Zen Plugin 2.0 does not support events yet
+    // instanceEvent_type      onStart;
+    // instanceEvent_type      onStop;
     /// @}
 
     /// @name 'Structors

@@ -39,13 +39,16 @@ public:
 
     /// Unload a module.
     virtual void unload(module_ptr_type _module) = 0;
+    
+    /// Install a static module
+    virtual void install(const std::string& _moduleName, I_Module& _module) = 0;
     /// @}
 
     /// @name 'Structors
     /// @{
 protected:
-             I_ModuleService();
-    virtual ~I_ModuleService();
+             I_ModuleService() = default;
+    virtual ~I_ModuleService() = default;
     /// @}
 
 };  // interface I_ModuleService

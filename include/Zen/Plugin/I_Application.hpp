@@ -8,7 +8,8 @@
 
 #include "Configuration.hpp"
 
-#include <Zen/Core/Utility/log_stream.hpp>
+// TODO Implement log_stream
+// #include <Zen/Core/Utility/log_stream.hpp>
 
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
@@ -44,7 +45,8 @@ public:
     virtual const std::string& getName() const = 0;
     virtual const std::string& getVersion() const = 0;
     virtual const std::string& getProviderName() const = 0;
-    virtual Utility::log_stream& getLogStream() = 0;
+    // TODO Implement logging
+    // virtual Utility::log_stream& getLogStream() = 0;
     /// @}
 
     /// @{ 'Structors

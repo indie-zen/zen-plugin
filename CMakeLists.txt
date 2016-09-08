@@ -26,21 +26,17 @@ if ( WINDOWS_H )
 	add_definitions( -DTHREADMODEL_WIN32 )
 endif ( WINDOWS_H )
 
-find_package(Boost REQUIRED unit_test_framework)
+find_package(Boost REQUIRED unit_test_framework system filesystem)
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
 set(SOURCES
-  lib/I_ClassFactory.cpp
-  lib/I_Configuration.cpp
-  lib/I_ConfigurationElement.cpp
-  lib/I_Extension.cpp
-  lib/I_ExtensionFactory.cpp
-  lib/I_ExtensionPoint.cpp
-  lib/I_ExtensionRegistry.cpp
-  lib/I_Module.cpp
-  lib/I_Plugin.cpp
-  lib/I_PluginManager.cpp)
+  lib/I_ModuleManager.cpp
+  lib/I_StartupShutdownManager.cpp
+  lib/ModuleInfo.cpp
+  lib/ModuleManager.cpp
+  lib/ModuleService.cpp
+  lib/StartupShutdownManager.cpp)
 
 set(HEADERS
   include/Zen/Plugin/I_Configuration.hpp
@@ -50,6 +46,11 @@ add_definitions(-DZEN_PLUGIN_EXPORTS)
 add_definitions(-DBOOST_TEST_DYN_LINK) 
 
 add_library(zen-plugin ${SOURCES})
+
+#TODO dl is only applicable on Linux
+target_link_libraries(zen-plugin
+    ${Boost_LIBRARIES} dl
+)
 
 enable_testing()
 

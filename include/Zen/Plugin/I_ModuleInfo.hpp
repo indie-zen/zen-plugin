@@ -50,8 +50,8 @@ public:
     /// @name 'Structors
     /// @{
 protected:
-             I_ModuleInfo();
-    virtual ~I_ModuleInfo();
+             I_ModuleInfo() = default;
+    virtual ~I_ModuleInfo() = default;
     /// @}
 
 };  // interface I_ModuleInfo
