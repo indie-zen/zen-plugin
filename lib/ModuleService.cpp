@@ -234,6 +234,12 @@ ModuleService::install(const std::string& _moduleName, I_Module& _module)
 
     // Put it in the cache
     m_modules[&_module] = pModuleInfo;
+    
+    // Install the plugins contained by this module
+    _module.visitPlugins([](const std::string& _pluginName, 
+        I_Module::plugin_ptr_type _pPlugin) {
+            
+        });
 
 }
 

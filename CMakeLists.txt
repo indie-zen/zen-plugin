@@ -33,13 +33,23 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 set(SOURCES
   lib/I_ModuleManager.cpp
   lib/I_StartupShutdownManager.cpp
+  lib/I_ExtensionRegistry.cpp
   lib/ModuleInfo.cpp
   lib/ModuleManager.cpp
   lib/ModuleService.cpp
-  lib/StartupShutdownManager.cpp)
+  lib/StartupShutdownManager.cpp
+  lib/PluginInfo.cpp
+)
 
 set(HEADERS
+  include/Zen/Plugin/I_ClassFactory.hpp
   include/Zen/Plugin/I_Configuration.hpp
+  include/Zen/Plugin/I_Extension.hpp
+  include/Zen/Plugin/I_ExtensionPoint.hpp
+  include/Zen/Plugin/I_ExtensionQuery.hpp
+  include/Zen/Plugin/I_ExtensionRegistry.hpp
+  include/Zen/Plugin/I_PluginInfo.hpp
+  include/Zen/Plugin/extension_point.hpp
 )
 
 add_definitions(-DZEN_PLUGIN_EXPORTS)

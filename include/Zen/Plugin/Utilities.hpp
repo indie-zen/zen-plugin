@@ -139,6 +139,7 @@ public:
     virtual plugin_name_collection_type& getPluginNames();
     virtual I_Module::plugin_ptr_type getPlugin(const plugin_name_type& _pluginName);
     virtual void destroyPlugin(I_Module::plugin_ptr_type _plugin);
+    virtual void visitPlugins(plugin_visitor_type _visitor);
     /// @}
 
     /// @name 'Structors
@@ -217,6 +218,16 @@ void
 BaseModule<Plugin_type>::destroyPlugin(I_Module::plugin_ptr_type _pPlugin)
 {
     // TODO delete?
+}
+
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+template<typename Plugin_type>
+void
+BaseModule<Plugin_type>::visitPlugins(plugin_visitor_type _visitor)
+{
+    // TODO Don't hard code the plugin name
+    std::string pluginName("test");
+    _visitor(pluginName, m_pPlugin);
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

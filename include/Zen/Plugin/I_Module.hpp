@@ -64,6 +64,11 @@ public:
     /// Destroys the plugin.
     /// The framework will call this when it is finished with the plugin.
     virtual void destroyPlugin(plugin_ptr_type _Plugin) = 0;
+    
+    typedef void(*plugin_visitor_type)(const std::string&, plugin_ptr_type); 
+    /// Visit the plugins in this module
+    /// @since 2.0
+    virtual void visitPlugins(plugin_visitor_type _visitor) = 0;
     /// @}
 
     /// @name 'Structors

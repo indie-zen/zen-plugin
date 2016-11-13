@@ -3,27 +3,25 @@
 //
 // Copyright (C) 2001 - 2016 Raymond A. Richards
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-#ifndef ZEN_PLUGIN_I_EXTENSION_POINT_HPP_INCLUDED
-#define ZEN_PLUGIN_I_EXTENSION_POINT_HPP_INCLUDED
 
-#include "Configuration.hpp"
+#include <Zen/Plugin/I_ExtensionRegistry.hpp>
+
+#include "ExtensionRegistry.hpp"
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace Zen {
 namespace Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+static ExtensionRegistry sm_extensionRegistry;
 
-class PLUGIN_DLL_LINK I_ExtensionPoint
+//-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+I_ExtensionRegistry&
+I_ExtensionRegistry::getSingleton()
 {
-protected:
-             I_ExtensionPoint() = default;
-             I_ExtensionPoint(const I_ExtensionPoint&) = delete;
-    virtual ~I_ExtensionPoint() = default;
-};
+    return sm_extensionRegistry;
+}
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace Plugin
 }   // namespace Zen
+}   // namespace Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-
-#endif // ZEN_PLUGIN_I_EXTENSION_POINT_HPP_INCLUDED
