@@ -26,11 +26,9 @@
 
 #include "Configuration.hpp"
 
-#include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
-
 #include <string>
 #include <list>
+#include <memory>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace Zen {
@@ -51,7 +49,7 @@ public:
     typedef const I_ConfigurationElement*       const_ptr_type;
 
     typedef std::list<const_ptr_type>           config_list_type;
-    typedef boost::shared_ptr<config_list_type> config_list_ptr_type;
+    typedef std::shared_ptr<config_list_type>   config_list_ptr_type;
 
     // Defined below
     class I_ConfigurationElementVisitor;
@@ -119,6 +117,11 @@ public:
                  I_ConfigurationElementVisitor() = default;
         virtual ~I_ConfigurationElementVisitor() = default;
     };  // interface I_ConfigurationElementVisitor
+    
+    // Not copyable nor assignable
+    I_ConfigurationElement(const I_ConfigurationElement&) = delete;
+    void operator=(const I_ConfigurationElement&) = delete;
+    
 };	// interface I_ConfigurationElement
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

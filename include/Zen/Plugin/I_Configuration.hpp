@@ -8,6 +8,9 @@ namespace Zen {
 namespace Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
+// TODO #1 For 2.0, I_Configuration and I_ConfigurationElement need a fairly simple
+// implementation that does not require an outside XML library.
+// Possibly 
 class PLUGIN_DLL_LINK I_Configuration
 {
 protected:
