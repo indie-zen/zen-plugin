@@ -8,8 +8,6 @@
 
 #include "Configuration.hpp"
 
-#include <boost/noncopyable.hpp>
-
 #include <list>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
@@ -19,7 +17,6 @@ namespace Plugin {
 
 /// Service information
 class PLUGIN_DLL_LINK I_ServiceInfo
-:   public boost::noncopyable
 {
     /// @name Types
     /// @{
@@ -38,6 +35,10 @@ protected:
              I_ServiceInfo();
     virtual ~I_ServiceInfo();
     /// @}
+
+    // Not copyable nor assignable
+    I_ServiceInfo(const I_ServiceInfo&) = delete;
+    void operator=(const I_ServiceInfo&) = delete;
 
 };  // interface I_ServiceInfo
 

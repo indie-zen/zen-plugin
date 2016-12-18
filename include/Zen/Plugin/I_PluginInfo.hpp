@@ -11,8 +11,6 @@
 #include <Zen/Plugin/I_Configuration.hpp>
 #include <Zen/Plugin/I_ConfigurationElement.hpp>
 
-#include <boost/noncopyable.hpp>
-
 #include <string>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
@@ -23,7 +21,6 @@ namespace Plugin {
 /// Plugin Description
 /// @todo Change name to I_PluginDescription
 class PLUGIN_DLL_LINK I_PluginInfo
-:   public boost::noncopyable
 {
     /// @name Types
     /// @{
@@ -67,6 +64,10 @@ protected:
              I_PluginInfo();
     virtual ~I_PluginInfo();
     /// @}
+
+    // Not copyable nor assignable
+    I_PluginInfo(const I_PluginInfo&) = delete;
+    void operator=(const I_PluginInfo&) = delete;
 
 };  // interface I_PluginInfo
 

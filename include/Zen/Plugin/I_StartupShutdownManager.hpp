@@ -14,8 +14,6 @@
 
 #include <Zen/Plugin/I_Configuration.hpp>
 
-
-#include <boost/noncopyable.hpp>
 #include <future>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
@@ -26,7 +24,6 @@ class I_StartupShutdownParticipant;
 
 /// @brief Base StartupShutdown Manager
 class PLUGIN_DLL_LINK I_StartupShutdownManager
-:   boost::noncopyable
 {
     /// @name Types
     /// @{
@@ -84,7 +81,10 @@ protected:
     virtual ~I_StartupShutdownManager();
     /// @}
 
-    
+    // Not copyable nor assignable
+    I_StartupShutdownManager(const I_StartupShutdownManager&) = delete;
+    void operator=(const I_StartupShutdownManager&) = delete;
+
 };  // interface I_StartupShutdownManager
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

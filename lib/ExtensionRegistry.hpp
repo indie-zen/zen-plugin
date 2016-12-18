@@ -13,6 +13,7 @@
 
 #include <list>
 #include <map>
+#include <memory>
 #include <string>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
@@ -26,22 +27,18 @@ class ExtensionRegistry
     /// @name Types
     /// @{
 public:
-    //typedef std::map<std::string, extension_point_ptr_type>             extension_point_container_type;
-    // typedef std::list<extension_point_ptr_type>                         extension_point_container_type;
-    // typedef boost::shared_ptr<extension_point_container_type>           extension_point_container_ptr_type;
-    // typedef std::map<std::string, extension_point_container_ptr_type>   namespace_container_type;
+    typedef std::list<pExtensionPoint_type>                             ExtensionPointContainer_type;
+    typedef std::shared_ptr<ExtensionPointContainer_type>               pExtensionPointContainer_type;
+    typedef std::map<std::string, extension_point_container_ptr_type>   NamespaceContainer_type;
     /// @}
 
     /// @name I_ExtensionRegistry implementation
     /// @{
 public:
-    // virtual extension_point_ptr_type getExtensionPoint(const std::string& _namespace, const std::string& _extensionPointName);
-    virtual I_ExtensionRegistry::pExtensionQuery_type createQuery();
-    // virtual extension_result_set_ptr_type findExtensions(const pExtensionQuery_type _pQuery);
-    // virtual void getExtensionPoints(I_ExtensionPointVisitor& _visitor);
-    virtual pExtension_type findExtension(pExtensionQuery_type _pQuery, extension_filter_type _visitor);
-    virtual class_factory_ref_type getClassFactory(extension_ptr_type _extension);
-    /// @}
+    // virtual I_ExtensionRegistry::pExtensionQuery_type createQuery();
+    // virtual pExtension_type findExtension(pExtensionQuery_type _pQuery, extension_filter_type _visitor);
+    // virtual ClassFactory_ref_type getClassFactory(pExtension_type _pExtension);
+  /// @}
 
     /// @name ExtensionRegistry implementation
     /// @{
@@ -50,16 +47,16 @@ public:
     static ExtensionRegistry& getSingleton() { return *(dynamic_cast<ExtensionRegistry*>(&I_ExtensionRegistry::getSingleton())); }
 
     /// Create an extension point
-    boost::shared_ptr<ExtensionPoint> createExtensionPoint(const I_ConfigurationElement& _config, PluginInfo& _plugin);
+    // boost::shared_ptr<ExtensionPoint> createExtensionPoint(const I_ConfigurationElement& _config, PluginInfo& _plugin);
 
     /// Installs an extension point that is fully parsed and ready for use
-    void installExtensionPoint(boost::shared_ptr<ExtensionPoint> _extensionPoint);
+    // void installExtensionPoint(boost::shared_ptr<ExtensionPoint> _extensionPoint);
 
     /// Create an extension
-    boost::shared_ptr<Extension> createExtension(const I_ConfigurationElement& _config, PluginInfo& _plugin);
+    // boost::shared_ptr<Extension> createExtension(const I_ConfigurationElement& _config, PluginInfo& _plugin);
 
     /// Installs an extension that is fully parsed and ready for use
-    void installExtension(boost::shared_ptr<Extension> _extension);
+    // void installExtension(boost::shared_ptr<Extension> _extension);
 
     /// @}
 
@@ -74,12 +71,12 @@ public:
     /// @{
 private:
     /// Extension point namespace map with a list of extension points as the value.
-    namespace_container_type    m_namespaces;
+    NamespaceContainer_type         m_namespaces;
 
-    typedef std::map<std::string, pExtension_type >   extension_point_map;
+    typedef std::map<std::string, pExtension_type >   ExtensionPointMap_type;
 
     /// Extension point id (fully qualified including namespace) mapped to extension point objects
-    extension_point_map   m_extensionPoints;
+    ExtensionPointMap_type   m_extensionPoints;
 
     /// List of extensions
     /// @todo Should this be a map of some sort?

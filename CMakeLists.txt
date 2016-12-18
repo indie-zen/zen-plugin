@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.5)
 
 # Using experimental C++ features, including c++14 and c++17.
-set(CMAKE_CXX_FLAGS "-std=c++1z")
+set(CMAKE_CXX_FLAGS "-std=c++11")
 
 project(zenplugin)
 
@@ -76,5 +76,5 @@ target_link_libraries(zen-plugin-tests zen-plugin
 
 add_test(tests zen-plugin-tests)
 
-install(TARGETS zen-plugin DESTINATION /usr/local/bin)
+install(TARGETS zen-plugin DESTINATION /usr/local/lib)
 install(DIRECTORY include DESTINATION /usr/local)

@@ -8,8 +8,6 @@
 
 #include "Configuration.hpp"
 
-#include <boost/noncopyable.hpp>
-
 #include <string>
 
 #ifdef _WIN32
@@ -22,7 +20,6 @@ namespace Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 class PLUGIN_DLL_LINK I_ModuleInfo
-:   public boost::noncopyable
 {
     /// @name Types
     /// @{
@@ -53,6 +50,10 @@ protected:
              I_ModuleInfo() = default;
     virtual ~I_ModuleInfo() = default;
     /// @}
+
+    // Not copyable nor assignable
+    I_ModuleInfo(const I_ModuleInfo&) = delete;
+    void operator=(const I_ModuleInfo&) = delete;
 
 };  // interface I_ModuleInfo
 

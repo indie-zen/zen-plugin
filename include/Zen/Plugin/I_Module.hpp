@@ -8,7 +8,6 @@
 
 #include "Configuration.hpp"
 
-#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
 #include <string>
@@ -29,7 +28,6 @@ class I_Plugin;
 /// Base class for a Zen Module
 /// A plugin DLL should implement one of these
 class PLUGIN_DLL_LINK I_Module
-:   public boost::noncopyable
 {
     /// @name Types
     /// @{
@@ -77,6 +75,10 @@ protected:
              I_Module() = default;
     virtual ~I_Module() = default;
     /// @}
+
+    // Not copyable nor assignable
+    I_Module(const I_Module&) = delete;
+    void operator=(const I_Module&) = delete;
 
 };  // interface I_Module
 

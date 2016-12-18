@@ -8,8 +8,6 @@
 
 #include "Configuration.hpp"
 
-#include <boost/noncopyable.hpp>
-
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace Zen {
 namespace Plugin {
@@ -17,7 +15,6 @@ namespace Plugin {
 
 /// Base class factory interface
 class PLUGIN_DLL_LINK I_ClassFactory
-:   public boost::noncopyable
 {
 	/// @name Types
 	/// @{
@@ -35,6 +32,10 @@ protected:
              I_ClassFactory() = default;
     virtual ~I_ClassFactory() = default;
     /// @}
+
+    // Not copyable nor assignable
+    I_ClassFactory(const I_ClassFactory&) = delete;
+    void operator=(const I_ClassFactory&) = delete;
 
 };	// interface I_ClassFactory
 

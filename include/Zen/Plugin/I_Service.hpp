@@ -8,10 +8,6 @@
 
 #include "Configuration.hpp"
 
-#include <boost/noncopyable.hpp>
-
-#include <list>
-
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace Zen {
 namespace Plugin {
@@ -19,7 +15,6 @@ namespace Plugin {
 
 /// 
 class PLUGIN_DLL_LINK I_Service
-:   public boost::noncopyable
 {
     /// @name Types
     /// @{
@@ -31,11 +26,16 @@ public:
 public:
     /// @}
 
-    /// @{ 'Structors
+    /// @name 'Structors
+    /// @{ 
 protected:
              I_Service();
     virtual ~I_Service();
     /// @}
+
+    // Not copyable nor assignable
+    I_Service(const I_Service&) = delete;
+    void operator=(const I_Service&) = delete;
 
 };  // interface I_Service
 

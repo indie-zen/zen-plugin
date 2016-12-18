@@ -11,10 +11,9 @@
 // TODO Implement log_stream
 // #include <Zen/Core/Utility/log_stream.hpp>
 
-#include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
-
 #include <list>
+#include <memory>
+#include <string>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 namespace Zen {
@@ -22,10 +21,7 @@ namespace Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 class I_Configuration;
 
-/// @author Tony Richards
-/// @since 1.0
 class PLUGIN_DLL_LINK I_Application
-:   public boost::noncopyable
 {
     /// @name Types
     /// @{
@@ -54,6 +50,10 @@ protected:
              I_Application();
     virtual ~I_Application();
     /// @}
+
+    // Not copyable nor assignable
+    I_Application(const I_Application&) = delete;
+    void operator=(const I_Application&) = delete;
 
 };  // interface I_Application
 

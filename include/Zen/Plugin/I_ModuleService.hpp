@@ -8,7 +8,6 @@
 
 #include "Configuration.hpp"
 
-#include <boost/noncopyable.hpp>
 #include <boost/filesystem/path.hpp>
 
 #include <string>
@@ -21,7 +20,6 @@ namespace Plugin {
 class I_Module;
 
 class PLUGIN_DLL_LINK I_ModuleService
-:   public boost::noncopyable
 {
     /// @name Types
     /// @{
@@ -50,6 +48,10 @@ protected:
              I_ModuleService() = default;
     virtual ~I_ModuleService() = default;
     /// @}
+
+    // Not copyable nor assignable
+    I_ModuleService(const I_ModuleService&) = delete;
+    void operator=(const I_ModuleService&) = delete;
 
 };  // interface I_ModuleService
 
