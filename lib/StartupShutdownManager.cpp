@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Zen Plugin Framework
 //
-// Copyright (C) 2001 - 2016 Raymond A. Richards
+// Copyright (C) 2001 - 2018 Raymond A. Richards
 // Copyright (C) 2008 - 2009 Matthew Alan Gray
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #include "StartupShutdownManager.hpp"
@@ -9,8 +9,7 @@
 #include <Zen/Plugin/I_StartupShutdownParticipant.hpp>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace Zen {
-namespace Plugin {
+namespace Zen::Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 StartupShutdownManager::StartupShutdownManager()
 : m_currentState(INITIALIZED)
@@ -55,6 +54,5 @@ StartupShutdownManager::handleInstallParticipant(pParticipant_type _pParticipant
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace Plugin
-}   // namespace Zen
+}   // namespace Zen::Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

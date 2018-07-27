@@ -29,3 +29,6 @@
 
 # Node files
 node_modules
+
+# C++ Build
+build

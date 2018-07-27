@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Zen Plugin Framework
 //
-// Copyright (C) 2001 - 2016 Raymond A. Richards
+// Copyright (C) 2001 - 2018 Raymond A. Richards
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #ifndef ZEN_PLUGIN_I_MODULE_INFO_HPP_INCLUDED
 #define ZEN_PLUGIN_I_MODULE_INFO_HPP_INCLUDED
@@ -15,8 +15,7 @@
 #endif // _WIN32
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace Zen {
-namespace Plugin {
+namespace Zen::Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 class PLUGIN_DLL_LINK I_ModuleInfo
@@ -58,8 +57,7 @@ protected:
 };  // interface I_ModuleInfo
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace Plugin
-}   // namespace Zen
+}   // namespace Zen::Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 #endif // ZEN_PLUGIN_I_MODULE_INFO_HPP_INCLUDED

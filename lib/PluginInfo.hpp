@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Zen Plugin Framework
 //
-// Copyright (C) 2001 - 2016 Raymond A. Richards
+// Copyright (C) 2001 - 2018 Raymond A. Richards
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #ifndef ZEN_PLUGIN_PLUGIN_INFO_HPP_INCLUDED
 #define ZEN_PLUGIN_PLUGIN_INFO_HPP_INCLUDED
@@ -13,7 +13,6 @@
 #include "ExtensionPoint.hpp"
 #include "Extension.hpp"
 
-#include <boost/shared_ptr.hpp>
 
 #include <string>
 #include <map>
@@ -21,11 +20,10 @@
 #include <utility>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace Zen {
-    namespace Threading {
-        class I_Mutex;
-    }
-namespace Plugin {
+namespace Zen::Threading {
+    class I_Mutex;
+}
+namespace Zen::Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 class I_Plugin;
 class Extension;
@@ -67,10 +65,10 @@ public:
     void onPluginElement(XMLConfigurationElement::ptr_type _pElement);
 
     /// Get the I_Plugin associated with this description
-    boost::shared_ptr<I_Plugin> getPlugin();
+    std::shared_ptr<I_Plugin> getPlugin();
 
-    const std::list<boost::shared_ptr<ExtensionPoint> >& getExtensionPoints() const;
-    const std::list<boost::shared_ptr<Extension> >& getExtensions() const;
+    const std::list<std::shared_ptr<ExtensionPoint> >& getExtensionPoints() const;
+    const std::list<std::shared_ptr<Extension> >& getExtensions() const;
 
     const std::list<std::string>& getRequiredPlugins() const;
 
@@ -113,18 +111,17 @@ private:
     /// Guard for the m_pRawPlugin assignemnt
     Threading::I_Mutex*         m_pGuard;
     volatile I_Plugin*          m_pRawPlugin;
-    boost::shared_ptr<I_Plugin> m_plugin;
+    std::shared_ptr<I_Plugin> m_plugin;
 
-    std::list<boost::shared_ptr<ExtensionPoint> >   m_extensionPoints;
+    std::list<std::shared_ptr<ExtensionPoint> >   m_extensionPoints;
 
-    std::list<boost::shared_ptr<Extension> >        m_extensions;
+    std::list<std::shared_ptr<Extension> >        m_extensions;
 
     /// @}
 };  // class PluginInfo
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace Plugin
-}   // namespace Zen
+}   // namespace Zen::Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 #endif // ZEN_PLUGIN_PLUGIN_INFO_HPP_INCLUDED

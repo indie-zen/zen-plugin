@@ -1,18 +1,16 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Zen Plugin Framework
 //
-// Copyright (C) 2001 - 2016 Raymond A. Richards
+// Copyright (C) 2001 - 2018 Raymond A. Richards
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #ifndef ZEN_PLUGIN_MODULE_MANAGER_HPP_INCLUDED
 #define ZEN_PLUGIN_MODULE_MANAGER_HPP_INCLUDED
 
 #include <Zen/Plugin/I_ModuleManager.hpp>
 
-#include <boost/shared_ptr.hpp>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace Zen {
-namespace Plugin {
+namespace Zen::Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 class ModuleManager
@@ -21,7 +19,7 @@ class ModuleManager
     /// @name Types
     /// @{
 public:
-    typedef boost::shared_ptr<I_ModuleService>                  module_service_ptr_type;
+    typedef std::shared_ptr<I_ModuleService>                  module_service_ptr_type;
     typedef std::list</*const*/ boost::filesystem::path>            module_paths_type;
     typedef std::list</*const*/ boost::filesystem::path>::iterator  module_paths_iterator_type;
     /// @}
@@ -62,8 +60,7 @@ private:
 };  // interface ModuleManager
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}	// namespace Plugins
-}	// namespace Zen
+}	// namespace Zen::Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 #endif // ZEN_PLUGIN_MODULE_MANAGER_HPP_INCLUDED

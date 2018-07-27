@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Zen Plugin Framework
 //
-// Copyright (C) 2001 - 2016 Raymond A. Richards
+// Copyright (C) 2001 - 2018 Raymond A. Richards
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 #ifndef ZEN_PLUGIN_XML_CONFIGURATION_ELEMENT_HPP_INCLUDED
@@ -12,7 +12,6 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 
-#include <boost/shared_ptr.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/function.hpp>
 
@@ -22,8 +21,7 @@
 // <string> and <list> were already included from <I_ConfigurationElement.hpp>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace Zen {
-namespace Plugin {
+namespace Zen::Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 class XMLConfiguration;
 
@@ -33,7 +31,7 @@ class XMLConfigurationElement
     /// @name Types
     /// @{
 public:
-    typedef boost::shared_ptr<XMLConfigurationElement>              ptr_type;
+    typedef std::shared_ptr<XMLConfigurationElement>              ptr_type;
 
     typedef std::multimap<std::string, std::string>                 property_collection_type;
     typedef std::pair<property_collection_type::key_type, 
@@ -87,8 +85,7 @@ private:
 };	// class XMLConfigurationElement
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace Plugin
-}   // namespace Zen
+}   // namespace Zen::Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 #endif // ZEN_PLUGIN_XML_CONFIGURATION_ELEMENT_HPP_INCLUDED

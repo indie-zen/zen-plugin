@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Zen Plugin Framework
 //
-// Copyright (C) 2001 - 2016 Raymond A. Richards
+// Copyright (C) 2001 - 2018 Raymond A. Richards
 //
 //  This software is provided 'as-is', without any express or implied
 //  warranty.  In no event will the authors be held liable for any damages
@@ -40,8 +40,7 @@
 #include <stddef.h>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace Zen {
-namespace Plugin {
+namespace Zen::Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 Extension::Extension(const I_ConfigurationElement& _config, PluginInfo& _pluginInfo)
@@ -71,7 +70,7 @@ Extension::getClassFactory()
         {
             // Call getClassFactory to get the class factory.  This is implemented
             // by the plugin inside the .dll or .so
-            boost::shared_ptr<I_Plugin> pPlugin = m_pluginInfo.getPlugin();
+            std::shared_ptr<I_Plugin> pPlugin = m_pluginInfo.getPlugin();
             if (pPlugin.get() == NULL)
             {
                 throw Zen::Utility::runtime_exception("Extension::getClassFactory(): Error loading the plugin.");
@@ -128,6 +127,5 @@ Extension::getExtensionPointId() const
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace Zen
-}   // namespace Plugin
+}   // namespace Zen::Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

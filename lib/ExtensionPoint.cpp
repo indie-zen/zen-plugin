@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Zen Plugin Framework
 //
-// Copyright (C) 2001 - 2016 Raymond A. Richards
+// Copyright (C) 2001 - 2018 Raymond A. Richards
 //
 //  This software is provided 'as-is', without any express or implied
 //  warranty.  In no event will the authors be held liable for any damages
@@ -35,8 +35,7 @@
 #include <iostream>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace Zen {
-namespace Plugin {
+namespace Zen::Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 ExtensionPoint::ExtensionPoint(const I_ConfigurationElement& _config, PluginInfo& _pluginInfo)
 :   m_config(_config)
@@ -138,7 +137,7 @@ ExtensionPoint::getNamespace() const
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 void
-ExtensionPoint::addExtension(boost::shared_ptr<Extension> _extension)
+ExtensionPoint::addExtension(std::shared_ptr<Extension> _extension)
 {
     // Get the logger stream
     Zen::Utility::log_stream& logStream(
@@ -148,7 +147,7 @@ ExtensionPoint::addExtension(boost::shared_ptr<Extension> _extension)
     logStream << "Adding extension " << _extension->getType() << 
         " to " << m_namespace << "::" << m_id << std::endl;
 
-    boost::shared_ptr<I_Extension> pExtension(boost::shared_dynamic_cast<I_Extension>(_extension));
+    std::shared_ptr<I_Extension> pExtension(boost::shared_dynamic_cast<I_Extension>(_extension));
     m_extensions->push_back(pExtension);
     m_extensionIdIndex[_extension->getType()] = pExtension;
 }
@@ -168,6 +167,5 @@ ExtensionPoint::onSchemaElement(XMLConfigurationElement::ptr_type _pElement)
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace Zen
-}   // namespace Plugin
+}   // namespace Zen::Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

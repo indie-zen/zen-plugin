@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Zen Plugin Framework
 //
-// Copyright (C) 2001 - 2016 Raymond A. Richards
+// Copyright (C) 2001 - 2018 Raymond A. Richards
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 #ifndef ZEN_PLUGIN_EXTENSION_REGISTRY_HPP_INCLUDED
@@ -17,8 +17,7 @@
 #include <string>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace Zen {
-namespace Plugin {
+namespace Zen::Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 class ExtensionRegistry
@@ -47,16 +46,16 @@ public:
     static ExtensionRegistry& getSingleton() { return *(dynamic_cast<ExtensionRegistry*>(&I_ExtensionRegistry::getSingleton())); }
 
     /// Create an extension point
-    // boost::shared_ptr<ExtensionPoint> createExtensionPoint(const I_ConfigurationElement& _config, PluginInfo& _plugin);
+    // std::shared_ptr<ExtensionPoint> createExtensionPoint(const I_ConfigurationElement& _config, PluginInfo& _plugin);
 
     /// Installs an extension point that is fully parsed and ready for use
-    // void installExtensionPoint(boost::shared_ptr<ExtensionPoint> _extensionPoint);
+    // void installExtensionPoint(std::shared_ptr<ExtensionPoint> _extensionPoint);
 
     /// Create an extension
-    // boost::shared_ptr<Extension> createExtension(const I_ConfigurationElement& _config, PluginInfo& _plugin);
+    // std::shared_ptr<Extension> createExtension(const I_ConfigurationElement& _config, PluginInfo& _plugin);
 
     /// Installs an extension that is fully parsed and ready for use
-    // void installExtension(boost::shared_ptr<Extension> _extension);
+    // void installExtension(std::shared_ptr<Extension> _extension);
 
     /// @}
 
@@ -87,8 +86,7 @@ private:
 };	// class ExtensionRegistry
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace Plugin
-}   // namespace Zen
+}   // namespace Zen::Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 #endif // ZEN_PLUGIN_EXTENSION_REGISTRY_HPP_INCLUDED

@@ -1,14 +1,12 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Zen Plugin Framework
 //
-// Copyright (C) 2001 - 2016 Raymond A. Richards
+// Copyright (C) 2001 - 2018 Raymond A. Richards
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #ifndef ZEN_PLUGIN_I_MODULE_HPP_INCLUDED
 #define ZEN_PLUGIN_I_MODULE_HPP_INCLUDED
 
 #include "Configuration.hpp"
-
-#include <boost/shared_ptr.hpp>
 
 #include <string>
 #include <list>
@@ -18,8 +16,7 @@
 #endif //HOST_POSIX
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace Zen {
-namespace Plugin {
+namespace Zen::Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 // Forward declarations
@@ -34,7 +31,7 @@ class PLUGIN_DLL_LINK I_Module
 public:
     typedef std::string                 plugin_name_type;
     typedef std::list<plugin_name_type> plugin_name_collection_type;
-    typedef boost::shared_ptr<I_Plugin> plugin_ptr_type;
+    typedef std::shared_ptr<I_Plugin> plugin_ptr_type;
 
 #ifdef HOST_WIN32
     typedef I_Module& (*proc_ptr_type)();
@@ -83,8 +80,7 @@ protected:
 };  // interface I_Module
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace Zen
-}   // namespace Plugin
+}   // namespace Zen::Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 #endif // ZEN_PLUGIN_I_MODULE_HPP_INCLUDED

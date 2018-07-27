@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Zen Plugin Framework
 //
-// Copyright (C) 2001 - 2016 Raymond A. Richards
+// Copyright (C) 2001 - 2018 Raymond A. Richards
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #include "PluginManager.hpp"
 #include "PluginInfo.hpp"
@@ -30,8 +30,7 @@
 #include <stddef.h>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace Zen {
-namespace Plugin {
+namespace Zen::Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 PluginManager::PluginManager()
@@ -45,7 +44,7 @@ PluginManager::~PluginManager()
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-boost::shared_ptr<I_Application>
+std::shared_ptr<I_Application>
 PluginManager::installApplication(const boost::filesystem::path& _configFile,
                                   const boost::filesystem::path& _logFile)
 {
@@ -60,7 +59,7 @@ PluginManager::installApplication(const boost::filesystem::path& _configFile,
     // Need the raw pointer; this is safe since this line and the next won't throw
     // an exception.
     Application* const pApplication = new Application(pLogService);
-    m_pApplication = boost::shared_ptr<I_Application>(pApplication);
+    m_pApplication = std::shared_ptr<I_Application>(pApplication);
 
     pApplication->parseConfigurationFile(_configFile);
 
@@ -68,7 +67,7 @@ PluginManager::installApplication(const boost::filesystem::path& _configFile,
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-boost::shared_ptr<I_Application>
+std::shared_ptr<I_Application>
 PluginManager::getApplication()
 {
     return m_pApplication;
@@ -133,7 +132,7 @@ PluginManager::installPlugin(const std::string& _moduleName)
 
     // TODO Log Debug
     m_pApplication->getLogStream() << "DEBUG: installing plugin " << _moduleName << std::endl;
-    boost::shared_ptr<PluginInfo> pPluginInfo(new PluginInfo());
+    std::shared_ptr<PluginInfo> pPluginInfo(new PluginInfo());
 
     // Search the plugin search path for the correct plugin.xml file
     boost::filesystem::path pluginConfigurationPath;
@@ -169,10 +168,10 @@ PluginManager::installPlugin(const std::string& _moduleName)
         m_pluginInfos[pPluginInfo->getName()] = pPluginInfo;
 
         // Get all of the extension points defined by this plugin
-        const std::list<boost::shared_ptr<ExtensionPoint> >& extensionPoints(pPluginInfo->getExtensionPoints());
+        const std::list<std::shared_ptr<ExtensionPoint> >& extensionPoints(pPluginInfo->getExtensionPoints());
 
         // Parse the schemas for each extension point
-        for(std::list<boost::shared_ptr<ExtensionPoint> >::const_iterator iter = extensionPoints.begin(); iter != extensionPoints.end(); ++iter)
+        for(std::list<std::shared_ptr<ExtensionPoint> >::const_iterator iter = extensionPoints.begin(); iter != extensionPoints.end(); ++iter)
         {
             boost::filesystem::path schemaPath = (*pathIter) /
                 boost::filesystem::path(_moduleName) /
@@ -203,10 +202,10 @@ PluginManager::installPlugin(const std::string& _moduleName)
         installRequiredPlugins(pPluginInfo);
 
         // Get all of the extensions defined by this plugin
-        const std::list<boost::shared_ptr<Extension> >& extensions(pPluginInfo->getExtensions());
+        const std::list<std::shared_ptr<Extension> >& extensions(pPluginInfo->getExtensions());
 
         // Install the extensions
-        for(std::list<boost::shared_ptr<Extension> >::const_iterator iter = extensions.begin(); iter != extensions.end(); ++iter)
+        for(std::list<std::shared_ptr<Extension> >::const_iterator iter = extensions.begin(); iter != extensions.end(); ++iter)
         {
             // TODO Is this all that needs to be done?
 
@@ -225,7 +224,7 @@ PluginManager::installPlugin(const std::string& _moduleName)
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 void
-PluginManager::installRequiredPlugins(boost::shared_ptr<PluginInfo> _pluginInfo)
+PluginManager::installRequiredPlugins(std::shared_ptr<PluginInfo> _pluginInfo)
 {
     const std::list<std::string>& requiredPlugins = _pluginInfo->getRequiredPlugins();
 
@@ -271,17 +270,17 @@ PluginManager::getPlugin(plugin_info_ptr_type _pPluginInfo)
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #if 0   // deprecated
-boost::shared_ptr<I_ClassFactory>
+std::shared_ptr<I_ClassFactory>
 PluginManager::getClassFactory(Extension* const _pExtension)
 {
-    boost::shared_ptr<I_Plugin> pPlugin(_pExtension->getPluginInfo().getPlugin());
+    std::shared_ptr<I_Plugin> pPlugin(_pExtension->getPluginInfo().getPlugin());
 
     return pPlugin->getClassFactory(_pExtension->getConfigurationElement());
 }
 #endif
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-boost::shared_ptr<I_Plugin>
+std::shared_ptr<I_Plugin>
 PluginManager::getPlugin(PluginInfo* const _pPluginInfo)
 {
     // TODO Log Debug
@@ -307,7 +306,7 @@ PluginManager::getPlugin(PluginInfo* const _pPluginInfo)
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-boost::shared_ptr<I_Plugin>
+std::shared_ptr<I_Plugin>
 PluginManager::loadPlugin(PluginInfo* const _pPluginInfo)
 {
     // TODO First make sure the plugin dependencies are loaded.
@@ -350,6 +349,5 @@ PluginManager::loadPlugin(PluginInfo* const _pPluginInfo)
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace Plugin
-}   // namespace Zen
+}   // namespace Zen::Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

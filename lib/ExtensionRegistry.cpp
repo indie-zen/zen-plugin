@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Zen Plugin Framework
 //
-// Copyright (C) 2001 - 2016 Raymond A. Richards
+// Copyright (C) 2001 - 2018 Raymond A. Richards
 //
 //  This software is provided 'as-is', without any express or implied
 //  warranty.  In no event will the authors be held liable for any damages
@@ -44,8 +44,7 @@
 #include <iostream>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace Zen {
-namespace Plugin {
+namespace Zen::Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 ExtensionRegistry::ExtensionRegistry()
@@ -171,10 +170,10 @@ ExtensionRegistry::getClassFactory(extension_ptr_type _extension)
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-boost::shared_ptr<ExtensionPoint>
+std::shared_ptr<ExtensionPoint>
 ExtensionRegistry::createExtensionPoint(const I_ConfigurationElement& _config, PluginInfo& _pluginInfo)
 {
-    boost::shared_ptr<ExtensionPoint> pExtensionPoint(new ExtensionPoint(_config, _pluginInfo));
+    std::shared_ptr<ExtensionPoint> pExtensionPoint(new ExtensionPoint(_config, _pluginInfo));
 
     // TODO Finish?
 
@@ -183,7 +182,7 @@ ExtensionRegistry::createExtensionPoint(const I_ConfigurationElement& _config, P
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 void
-ExtensionRegistry::installExtensionPoint(boost::shared_ptr<ExtensionPoint> _extensionPoint)
+ExtensionRegistry::installExtensionPoint(std::shared_ptr<ExtensionPoint> _extensionPoint)
 {
     // Get the logger stream
     Zen::Utility::log_stream& logStream(
@@ -218,10 +217,10 @@ ExtensionRegistry::installExtensionPoint(boost::shared_ptr<ExtensionPoint> _exte
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-boost::shared_ptr<Extension>
+std::shared_ptr<Extension>
 ExtensionRegistry::createExtension(const I_ConfigurationElement& _config, PluginInfo& _pluginInfo)
 {
-    boost::shared_ptr<Extension> pExtension(new Extension(_config, _pluginInfo));
+    std::shared_ptr<Extension> pExtension(new Extension(_config, _pluginInfo));
 
     // TODO Finish?
     m_extensions.push_back(pExtension);
@@ -231,7 +230,7 @@ ExtensionRegistry::createExtension(const I_ConfigurationElement& _config, Plugin
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 void
-ExtensionRegistry::installExtension(boost::shared_ptr<Extension> _extension)
+ExtensionRegistry::installExtension(std::shared_ptr<Extension> _extension)
 {
     // Get the logger stream
     Zen::Utility::log_stream& logStream(
@@ -271,6 +270,5 @@ ExtensionRegistry::installExtension(boost::shared_ptr<Extension> _extension)
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace Zen
-}   // namespace Plugin
+}   // namespace Zen::Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~

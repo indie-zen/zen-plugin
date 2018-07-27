@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Zen Plugin Framework
 //
-// Copyright (C) 2001 - 2016 Raymond A. Richards
+// Copyright (C) 2001 - 2018 Raymond A. Richards
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 #ifndef ZEN_PLUGIN_MODULE_SERVICE_HPP_INCLUDED
 #define ZEN_PLUGIN_MODULE_SERVICE_HPP_INCLUDED
@@ -9,7 +9,6 @@
 #include <Zen/Plugin/I_ModuleInfo.hpp>
 #include <Zen/Plugin/I_ModuleService.hpp>
 
-#include <boost/shared_ptr.hpp>
 #include <boost/filesystem/path.hpp>
 
 #include <map>
@@ -17,8 +16,7 @@
 #include <string>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace Zen {
-namespace Plugin {
+namespace Zen::Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 class ModuleService
@@ -29,7 +27,7 @@ class ModuleService
 public:
     typedef std::map<std::string, module_ptr_type>                      module_name_index_type;
     typedef std::map<std::string, module_ptr_type>::iterator            module_name_index_iterator_type;
-    typedef boost::shared_ptr<I_ModuleInfo>                             module_info_ptr_type;
+    typedef std::shared_ptr<I_ModuleInfo>                             module_info_ptr_type;
     typedef std::map<module_ptr_type, module_info_ptr_type>             modules_type;
     typedef std::map<module_ptr_type, module_info_ptr_type>::iterator   modules_iterator_type;
     /// @}
@@ -60,8 +58,7 @@ private:
 };  // interface ModuleService
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}	// namespace Plugins
-}	// namespace Zen
+}	// namespace Zen::Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 #endif // ZEN_PLUGIN_MODULE_SERVICE_HPP_INCLUDED

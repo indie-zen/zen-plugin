@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.5)
 
 # Using experimental C++ features, including c++14 and c++17.
-set(CMAKE_CXX_FLAGS "-std=c++11")
+set(CMAKE_CXX_FLAGS "-std=c++17")
 
 project(zenplugin)
 

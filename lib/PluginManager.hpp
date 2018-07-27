@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Zen Plugin Framework
 //
-// Copyright (C) 2001 - 2016 Raymond A. Richards
+// Copyright (C) 2001 - 2018 Raymond A. Richards
 //
 //  This software is provided 'as-is', without any express or implied
 //  warranty.  In no event will the authors be held liable for any damages
@@ -24,17 +24,16 @@
 #ifndef ZEN_PLUGIN_PLUGIN_MANAGER_HPP_INCLUDED
 #define ZEN_PLUGIN_PLUGIN_MANAGER_HPP_INCLUDED
 
-#include <Zen/PluginI_PluginManager.hpp>
+#include <Zen/Plugin/I_PluginManager.hpp>
 
-#include <boost/shared_ptr.hpp>
+
 #include <boost/filesystem/path.hpp>
 
 #include <string>
 #include <map>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace Zen {
-namespace Plugin {
+namespace Zen::Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 class Application;
 class I_ClassFactory;
@@ -48,8 +47,8 @@ class PluginManager
     /// @name Types
     /// @{
 public:
-    typedef boost::shared_ptr<I_Plugin>                 plugin_ptr_type;
-    typedef boost::shared_ptr<I_PluginInfo>             plugin_info_ptr_type;
+    typedef std::shared_ptr<I_Plugin>                 plugin_ptr_type;
+    typedef std::shared_ptr<I_PluginInfo>             plugin_info_ptr_type;
     typedef std::map<std::string, plugin_ptr_type>      plugin_collection_type;
     typedef std::map<std::string, plugin_info_ptr_type> plugin_info_collection_type;
     typedef boost::filesystem::path                     plugin_path_type;
@@ -77,18 +76,18 @@ public:
     /// @{
 public:
     static PluginManager& getSingleton() { return *(dynamic_cast<PluginManager*>(&I_PluginManager::getSingleton())); }
-    //boost::shared_ptr<I_ClassFactory> getClassFactory(Extension* _pExtension);
-    boost::shared_ptr<I_Plugin> getPlugin(PluginInfo* const _pPluginInfo);
+    //std::shared_ptr<I_ClassFactory> getClassFactory(Extension* _pExtension);
+    std::shared_ptr<I_Plugin> getPlugin(PluginInfo* const _pPluginInfo);
     
     /// Load the schema for the given extension point
     void loadSchema(ExtensionPoint* _pExtensionPoint);
 
 protected:
     // Load a plugin
-    boost::shared_ptr<I_Plugin> loadPlugin(PluginInfo* const _pPluginInfo);
+    std::shared_ptr<I_Plugin> loadPlugin(PluginInfo* const _pPluginInfo);
 
     // Install all of the plugins required by the given plugin
-    void installRequiredPlugins(boost::shared_ptr<PluginInfo> _pluginInfo);
+    void installRequiredPlugins(std::shared_ptr<PluginInfo> _pluginInfo);
     /// @}
 
     /// @name 'Structors
@@ -120,7 +119,7 @@ private:
     /// Collection of loaded plugins indexed by name
 	plugin_collection_type					m_plugins;
 
-    boost::shared_ptr<I_Application>        m_pApplication;
+    std::shared_ptr<I_Application>        m_pApplication;
 
     char                                    m_specialCharacter;
     boost::filesystem::path                 m_rootPath;
@@ -128,8 +127,7 @@ private:
 };  // interface PluginManager
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace Plugin
-}   // namespace Zen
+}   // namespace Zen::Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 #endif // ZEN_PLUGIN_PLUGIN_MANAGER_HPP_INCLUDED

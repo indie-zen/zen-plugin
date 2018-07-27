@@ -1,7 +1,7 @@
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 // Zen Plugin Framework
 //
-// Copyright (C) 2001 - 2016 Raymond A. Richards
+// Copyright (C) 2001 - 2018 Raymond A. Richards
 //
 //  This software is provided 'as-is', without any express or implied
 //  warranty.  In no event will the authors be held liable for any damages
@@ -36,8 +36,7 @@
 #include <stddef.h>
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-namespace Zen {
-namespace Plugin {
+namespace Zen::Plugin {
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
 PluginInfo::PluginInfo()
@@ -177,7 +176,7 @@ PluginInfo::onPluginElement(XMLConfigurationElement::ptr_type _pElement)
     for(I_ConfigurationElement::config_list_type::iterator iter = pExtensionPoints->begin(); iter != pExtensionPoints->end(); ++iter)
     {
         // Install the extension point
-        boost::shared_ptr<ExtensionPoint> pExtensionPoint(ExtensionRegistry::getSingleton().createExtensionPoint(*(*iter), *this));
+        std::shared_ptr<ExtensionPoint> pExtensionPoint(ExtensionRegistry::getSingleton().createExtensionPoint(*(*iter), *this));
 
         m_extensionPoints.push_back(pExtensionPoint);
     }
@@ -187,14 +186,14 @@ PluginInfo::onPluginElement(XMLConfigurationElement::ptr_type _pElement)
     for(I_ConfigurationElement::config_list_type::iterator iter = pExtensions->begin(); iter != pExtensions->end(); ++iter)
     {
         // Install the extension
-        boost::shared_ptr<Extension> pExtension(ExtensionRegistry::getSingleton().createExtension(*(*iter), *this));
+        std::shared_ptr<Extension> pExtension(ExtensionRegistry::getSingleton().createExtension(*(*iter), *this));
 
         m_extensions.push_back(pExtension);
     }
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-boost::shared_ptr<I_Plugin>
+std::shared_ptr<I_Plugin>
 PluginInfo::getPlugin()
 {
     if (m_pRawPlugin == NULL)
@@ -212,14 +211,14 @@ PluginInfo::getPlugin()
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-const std::list<boost::shared_ptr<ExtensionPoint> >&
+const std::list<std::shared_ptr<ExtensionPoint> >&
 PluginInfo::getExtensionPoints() const
 {
     return m_extensionPoints;
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-const std::list<boost::shared_ptr<Extension> >&
+const std::list<std::shared_ptr<Extension> >&
 PluginInfo::getExtensions() const
 {
     return m_extensions;
@@ -233,6 +232,5 @@ PluginInfo::getRequiredPlugins() const
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
-}   // namespace Plugin
-}   // namespace Zen
+}   // namespace Zen::Plugin
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
