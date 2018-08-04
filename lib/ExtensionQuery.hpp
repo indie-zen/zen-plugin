@@ -25,7 +25,7 @@
 #ifndef ZEN_PLUGIN_EXTENSION_QUERY_HPP_INCLUDED
 #define ZEN_PLUGIN_EXTENSION_QUERY_HPP_INCLUDED
 
-#include <Zen/PluginI_ExtensionQuery.hpp>
+#include <Zen/Plugin/I_ExtensionQuery.hpp>
 
 #include <string>
 

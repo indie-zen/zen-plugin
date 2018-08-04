@@ -28,15 +28,16 @@ class ExtensionRegistry
 public:
     typedef std::list<pExtensionPoint_type>                             ExtensionPointContainer_type;
     typedef std::shared_ptr<ExtensionPointContainer_type>               pExtensionPointContainer_type;
-    typedef std::map<std::string, extension_point_container_ptr_type>   NamespaceContainer_type;
+    typedef std::map<std::string, pExtensionPointContainer_type>        NamespaceContainer_type;
     /// @}
 
     /// @name I_ExtensionRegistry implementation
     /// @{
 public:
-    // virtual I_ExtensionRegistry::pExtensionQuery_type createQuery();
-    // virtual pExtension_type findExtension(pExtensionQuery_type _pQuery, extension_filter_type _visitor);
-    // virtual ClassFactory_ref_type getClassFactory(pExtension_type _pExtension);
+    virtual I_ExtensionRegistry::pExtensionQuery_type createQuery();
+    virtual void getExtensions(pExtensionQuery_type _pQuery, ExtensionVisitor_type _visitor);
+    virtual pExtension_type findExtension(pExtensionQuery_type _pQuery, ExtensionFilter_type _visitor);
+    virtual ClassFactory_ref_type getClassFactory(pExtension_type _pExtension);
   /// @}
 
     /// @name ExtensionRegistry implementation
